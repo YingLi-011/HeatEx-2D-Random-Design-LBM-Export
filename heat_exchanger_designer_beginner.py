@@ -8,6 +8,7 @@ from io import BytesIO, StringIO
 import pickle
 import random
 import os
+from pathlib import Path
 
 # Page configuration
 st.set_page_config(
@@ -2196,14 +2197,19 @@ def main():
         ):
             st.markdown("#### 🏗️ 3D Model Reference")
             try:
-                img_path = r"C:\\Users\\13497\\OneDrive\\Desktop\\1.png"
-                if os.path.exists(img_path):
-                    st.image(img_path,
+                # Prefer repo-local image (works on Streamlit Cloud)
+                repo_img = Path(__file__).parent / "1.png"
+                if repo_img.exists():
+                    st.image(str(repo_img),
                              caption="3D Model of Hybrid Finned Cold Plate with Flow Regulation",
                              width=300)
                     st.markdown("*Three-dimensional visualization showing flow guide walls, horizontal fins, and circular fins integration*")
                 else:
-                    st.info("3D model image not available on this runtime.")
+                    # Fallback: raw GitHub URL (update if repo/branch changes)
+                    raw_url = "https://raw.githubusercontent.com/YingLi-011/HeatEx-2D-Random-Design-LBM-Export/main/1.png"
+                    st.image(raw_url,
+                             caption="3D Model of Hybrid Finned Cold Plate with Flow Regulation",
+                             width=300)
             except Exception:
                 st.info("3D model image not available on this runtime.")
             st.markdown("---")
