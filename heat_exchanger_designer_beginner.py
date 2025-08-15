@@ -7,6 +7,7 @@ import pandas as pd
 from io import BytesIO, StringIO
 import pickle
 import random
+import os
 
 # Page configuration
 st.set_page_config(
@@ -2195,12 +2196,16 @@ def main():
         ):
             st.markdown("#### 🏗️ 3D Model Reference")
             try:
-                st.image(r"C:\\Users\\13497\\OneDrive\\Desktop\\1.png", 
-                        caption="3D Model of Hybrid Finned Cold Plate with Flow Regulation",
-                        width=300)
-                st.markdown("*Three-dimensional visualization showing flow guide walls, horizontal fins, and circular fins integration*")
-            except FileNotFoundError:
-                st.warning("📋 3D model image not found. Please ensure the file exists at the specified path.")
+                img_path = r"C:\\Users\\13497\\OneDrive\\Desktop\\1.png"
+                if os.path.exists(img_path):
+                    st.image(img_path,
+                             caption="3D Model of Hybrid Finned Cold Plate with Flow Regulation",
+                             width=300)
+                    st.markdown("*Three-dimensional visualization showing flow guide walls, horizontal fins, and circular fins integration*")
+                else:
+                    st.info("3D model image not available on this runtime.")
+            except Exception:
+                st.info("3D model image not available on this runtime.")
             st.markdown("---")
         
         # Stats panel: in Random Explore mode we do not show per-candidate scores anymore
